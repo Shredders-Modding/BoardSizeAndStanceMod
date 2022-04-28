@@ -36,5 +36,5 @@ using MelonLoader;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-[assembly: MelonInfo(typeof(BoardSizeAndStanceMod.ModManager), "BoardSizeAndStanceMod", " 0.3", "Pamplemousse")]
+[assembly: MelonInfo(typeof(BoardSizeAndStanceMod.ModManager), "BoardSizeAndStanceMod", " 0.31", "Pamplemousse")]
 [assembly: MelonGame("Foampunch", "Shredders")]

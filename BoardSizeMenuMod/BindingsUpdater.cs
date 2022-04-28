@@ -50,7 +50,7 @@ namespace BoardSizeAndStanceMod
                 if (currentTime < 0.1f)
                 {
                     BindingsManager.instance.InitBindings();
-                    if (newMeshFilter.mesh != originalMeshFilter.mesh && isReplayBinding)
+                    if (newMeshFilter.mesh != originalMeshFilter.mesh)
                     {
                         newMeshFilter.mesh = originalMeshFilter.mesh;
                         newMeshFilter.GetComponent<MeshRenderer>().material = originalMeshFilter.GetComponent<MeshRenderer>().material;

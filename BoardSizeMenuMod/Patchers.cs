@@ -97,6 +97,7 @@ namespace BoardSizeAndStanceMod
             {
                 ModLogger.Log($"Hooked method {__originalMethod.Name}");
                 ModManager.instance.ReloadStructureOverTime(100);
+                BindingsManager.instance.ResetBindingsUpdaters();
             }
             catch (System.Exception ex)
             {
