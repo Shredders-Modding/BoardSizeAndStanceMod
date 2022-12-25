@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Il2Cpp;
+using Il2CppInterop.Runtime.Injection;
 using MelonLoader;
-using UnhollowerRuntimeLib;
 using UnityEngine;
+using Il2CppInterop.Runtime.InteropTypes;
 
 namespace BoardSizeAndStanceMod
 {
@@ -14,8 +16,8 @@ namespace BoardSizeAndStanceMod
         public static ModManager instance;
 
         public static MelonPreferences_Category boardSizePrefCategory;
-        public static MelonPreferences_Entry<float> boardLengthPref;
-        public static MelonPreferences_Entry<float> boardWidthPref;
+        public static MelonPreferences_Entry<string> boardLengthPref;
+        public static MelonPreferences_Entry<string> boardWidthPref;
         public static MelonPreferences_Entry<bool> crazyModPref;
 
         public float boardLengthFactor;
@@ -25,19 +27,19 @@ namespace BoardSizeAndStanceMod
         public GameObject gameplayRider;
         public GameObject gameplayBoard;
         public bool areGameplayObjectsRegistered;
-        public Lirp.SnowboardEquipment gameplayBoardEquipement;
+        public Il2CppLirp.SnowboardEquipment gameplayBoardEquipement;
         private Vector3[] defaultGameplayBoardBonesPos;
 
         public GameObject replayRider;
         public GameObject replayBoard;
         public bool areReplayObjectsRegistered;
-        public Lirp.SnowboardEquipment replayBoardEquipement;
+        public Il2CppLirp.SnowboardEquipment replayBoardEquipement;
         private Vector3[] defaultReplayBoardBonesPos;
 
         public GameObject newBoardChildrenParent;
 
         //private GameObject[] boardColliders;
-        public static Lirp.UserSession userSession;
+        public static Il2CppLirp.UserSession userSession;
         public static PlayerRigReplayManager replayManager;
 
         private AssetManager assetManager;
@@ -45,7 +47,7 @@ namespace BoardSizeAndStanceMod
         public bool isDebugActive;
 
         //public Lirp.VisualCharacter visualCharacter;
-        public Lirp.CharacterStructure characterStructure;
+        public Il2CppLirp.CharacterStructure characterStructure;
         public GameObject csGo;
         public Transform csTransform;
         public bool csBool;
@@ -67,7 +69,7 @@ namespace BoardSizeAndStanceMod
         public float widthFactorOnReload;
         public float previousWidthOnReload;
 
-        public override void OnApplicationStart()
+        public override void OnInitializeMelon()
         {
             ClassInjector.RegisterTypeInIl2Cpp<MenuBuilder>();
             ClassInjector.RegisterTypeInIl2Cpp<TransformUpdater>();
@@ -78,13 +80,13 @@ namespace BoardSizeAndStanceMod
 
             boardSizePrefCategory = MelonPreferences.CreateCategory("boardSizePrefCategory");
 
-            boardLengthPref = boardSizePrefCategory.CreateEntry("boardLengthPref", 1f);
-            boardWidthPref = boardSizePrefCategory.CreateEntry("boardWidthPref", 1f);
+            boardLengthPref = boardSizePrefCategory.CreateEntry("boardLengthPref", 1f.ToString("F2"));
+            boardWidthPref = boardSizePrefCategory.CreateEntry("boardWidthPref", 1f.ToString("F2"));
 
             crazyModPref = boardSizePrefCategory.CreateEntry("crazyModPref", false);
 
-            boardLengthFactor = boardLengthPref.Value;
-            boardWidthFactor = boardWidthPref.Value;
+            boardLengthFactor = float.Parse(boardLengthPref.Value);
+            boardWidthFactor = float.Parse(boardWidthPref.Value);
 
             isCrazyModeActivated = crazyModPref.Value;
             if (isCrazyModeActivated)
@@ -111,7 +113,7 @@ namespace BoardSizeAndStanceMod
 
             if (sceneName == "GameBase")
             {
-                userSession = GameObject.Find("UserSession").GetComponent<Lirp.UserSession>();
+                userSession = GameObject.Find("UserSession").GetComponent<Il2CppLirp.UserSession>();
                 //MelonLogger.Msg("UserSession registered");
             }
 
@@ -198,7 +200,7 @@ namespace BoardSizeAndStanceMod
             newBoardChildrenParent = GameObject.Instantiate(new GameObject(), gameplayBoard.transform);
             newBoardChildrenParent.name = "NewParent";
 
-            gameplayBoardEquipement = gameplayBoard.GetComponent<Lirp.SnowboardEquipment>();
+            gameplayBoardEquipement = gameplayBoard.GetComponent<Il2CppLirp.SnowboardEquipment>();
             defaultGameplayBoardBonesPos = gameplayBoardEquipement.defaultBonePositions;
             //BindingsManager.instance.SetupGameplayBindings();
 
@@ -250,7 +252,7 @@ namespace BoardSizeAndStanceMod
             if (!replayBoard)
                 return false;
 
-            replayBoardEquipement = replayBoard.GetComponent<Lirp.SnowboardEquipment>();
+            replayBoardEquipement = replayBoard.GetComponent<Il2CppLirp.SnowboardEquipment>();
             defaultReplayBoardBonesPos = replayBoardEquipement.defaultBonePositions;
 
             BindingsManager.instance.SetupReplayBindings();
@@ -258,7 +260,7 @@ namespace BoardSizeAndStanceMod
             return true;
         }
 
-        public void InitBoardSizeValues() => UpdateBoardSizeValues(boardLengthPref.Value, boardWidthPref.Value);
+        public void InitBoardSizeValues() => UpdateBoardSizeValues(float.Parse(boardLengthPref.Value), float.Parse(boardWidthPref.Value));
 
         public void InitBoardOverTime(int in_nbrOfFrames)
         {
@@ -270,8 +272,8 @@ namespace BoardSizeAndStanceMod
 
         public void UpdateBoardBonesScales()
         {
-            float lengthFactorToApply = Mathf.Pow(boardLengthPref.Value, crazyFactor);
-            float widthFactorToApply = Mathf.Pow(boardWidthPref.Value, crazyFactor);
+            float lengthFactorToApply = Mathf.Pow(float.Parse(boardLengthPref.Value), crazyFactor);
+            float widthFactorToApply = Mathf.Pow(float.Parse(boardWidthPref.Value), crazyFactor);
 
             //currentBoardScale = new Vector3(widthFactorToApply, 1, lengthFactorToApply);
 
@@ -327,8 +329,8 @@ namespace BoardSizeAndStanceMod
             boardLengthFactor = in_length;
             boardWidthFactor = in_width;
 
-            boardLengthPref.Value = boardLengthFactor;
-            boardWidthPref.Value = boardWidthFactor;
+            boardLengthPref.Value = boardLengthFactor.ToString("F2");
+            boardWidthPref.Value = boardWidthFactor.ToString("F2");
 
             float lengthFactorToApply = Mathf.Pow(boardLengthFactor, crazyFactor);
             float widthFactorToApply = Mathf.Pow(boardWidthFactor, crazyFactor);

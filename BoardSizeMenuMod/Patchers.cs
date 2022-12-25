@@ -4,17 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using Harmony;
+using HarmonyLib;
 using MelonLoader;
-using Lirp;
+using Il2CppLirp;
+using Il2Cpp;
 
 namespace BoardSizeAndStanceMod
 {
-    [HarmonyPatch(typeof(Lirp.SnowboardController), "Show")]
-    class SnowboardControllerPatcher
+    [HarmonyPatch(typeof(SnowboardController), "Show")]
+    internal class SnowboardControllerPatcher
     {
         [HarmonyPostfix]
-        public static void Postfix(System.Reflection.MethodBase __originalMethod, Lirp.SnowboardController __instance)
+        public static void Postfix(System.Reflection.MethodBase __originalMethod, SnowboardController __instance)
         {
             try
             {
@@ -44,11 +45,11 @@ namespace BoardSizeAndStanceMod
         }
     }
 
-    [HarmonyPatch(typeof(Lirp.PreviewCharacter), "Exit")]
-    class PreviewCharacterPatcher
+    [HarmonyPatch(typeof(PreviewCharacter), "Exit")]
+    internal class PreviewCharacterPatcher
     {
         [HarmonyPostfix]
-        public static void Postfix(System.Reflection.MethodBase __originalMethod, Lirp.PreviewCharacter __instance)
+        public static void Postfix(System.Reflection.MethodBase __originalMethod, PreviewCharacter __instance)
         {
             try
             {
@@ -68,11 +69,11 @@ namespace BoardSizeAndStanceMod
         }
     }
 
-    [HarmonyPatch(typeof(Lirp.PreviewCharacter), "SetRiderToConfig")]
-    class PreviewCharacterPatcher2
+    [HarmonyPatch(typeof(PreviewCharacter), "SetRiderToConfig")]
+    internal class PreviewCharacterPatcher2
     {
         [HarmonyPrefix]
-        public static void Prefix(System.Reflection.MethodBase __originalMethod, Lirp.PreviewCharacter __instance)
+        public static void Prefix(System.Reflection.MethodBase __originalMethod, PreviewCharacter __instance)
         {
             try
             {
@@ -88,10 +89,10 @@ namespace BoardSizeAndStanceMod
     }
 
     [HarmonyPatch(typeof(EditCharacterGUI), "DoBack")]
-    class EditCharacterGUIPatcher_DoBack
+    internal class EditCharacterGUIPatcher_DoBack
     {
         [HarmonyPostfix]
-        public static void Postfix(System.Reflection.MethodBase __originalMethod, Lirp.ActionGrab __instance)
+        public static void Postfix(System.Reflection.MethodBase __originalMethod, ActionGrab __instance)
         {
             try
             {
@@ -107,10 +108,10 @@ namespace BoardSizeAndStanceMod
     }
 
     [HarmonyPatch(typeof(EditCharacterGUI), "OnShow")]
-    class EditCharacterGUIPatcher_OnShow
+    internal class EditCharacterGUIPatcher_OnShow
     {
         [HarmonyPostfix]
-        public static void Postfix(System.Reflection.MethodBase __originalMethod, Lirp.ActionGrab __instance)
+        public static void Postfix(System.Reflection.MethodBase __originalMethod, ActionGrab __instance)
         {
             try
             {
@@ -124,52 +125,11 @@ namespace BoardSizeAndStanceMod
         }
     }
 
-    /*
-    [HarmonyPatch(typeof(PreviewCharacter), "Init")]
-    class EditCharacterGUIPatcher_Init
+    [HarmonyPatch(typeof(SnowboardController), "StartNewRide")]
+    internal class SnowboardEquipmentPatcher
     {
         [HarmonyPostfix]
-        public static void Postfix(System.Reflection.MethodBase __originalMethod, Lirp.ActionGrab __instance)
-        {
-            try
-            {
-                ModLogger.Log($"Hooked method {__originalMethod.Name}");
-                //ModManager.instance.ResetBoardBonesScale();
-                //ModManager.instance.ReloadStructureOverTime(100);
-            }
-            catch (System.Exception ex)
-            {
-                //MelonLogger.Msg($"Exception in patch of SnowboardSounds.OnLand:\n{ex}");
-            }
-        }
-    }*/
-
-    /*
-    [HarmonyPatch(typeof(Lirp.SnowboardEquipment), "GenerateBones")]
-    class SnowboardEquipmentGenerateBonesPatcher
-    {
-        [HarmonyPrefix]
-        public static void Prefix(System.Reflection.MethodBase __originalMethod, Lirp.SnowboardController __instance)
-        {
-            try
-            {
-                ModLogger.Log("SnowboardEquipment GenerateBones");
-                BindingsManager.instance.ResetBindingsUpdaters();
-                ModManager.instance.InitBoardSizeValues();
-            }
-            catch (System.Exception ex)
-            {
-                //MelonLogger.Msg($"Exception in patch of SnowboardSounds.OnLand:\n{ex}");
-            }
-        }
-    }
-    */
-
-    [HarmonyPatch(typeof(Lirp.SnowboardController), "StartNewRide")]
-    class SnowboardEquipmentPatcher
-    {
-        [HarmonyPostfix]
-        public static void Postfix(System.Reflection.MethodBase __originalMethod, Lirp.SnowboardController __instance)
+        public static void Postfix(System.Reflection.MethodBase __originalMethod, SnowboardController __instance)
         {
             try
             {
@@ -187,7 +147,7 @@ namespace BoardSizeAndStanceMod
     }
 
     [HarmonyPatch(typeof(PlayerRigReplayManager), "SetupReplays")]
-    class ReplayManagerShowPlayerPatch
+    internal class ReplayManagerShowPlayerPatch
     {
         [HarmonyPostfix]
         public static void Postfix(System.Reflection.MethodBase __originalMethod, PlayerRigReplayManager __instance)
@@ -220,7 +180,7 @@ namespace BoardSizeAndStanceMod
     }
 
     [HarmonyPatch(typeof(PlayerRigReplayManager), "DisableReplays")]
-    class ReplayerStartPatch
+    internal class ReplayerStartPatch
     {
         [HarmonyPostfix]
         public static void Postfix(System.Reflection.MethodBase __originalMethod, Replayer __instance)

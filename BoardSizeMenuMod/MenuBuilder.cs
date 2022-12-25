@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MelonLoader;
-using TMPro;
-using UnhollowerRuntimeLib;
+using Il2CppTMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
