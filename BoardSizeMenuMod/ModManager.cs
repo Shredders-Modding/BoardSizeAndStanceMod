@@ -76,7 +76,7 @@ namespace BoardSizeAndStanceMod
             ClassInjector.RegisterTypeInIl2Cpp<BindingsUpdater>();
 
             instance = this;
-            isDebugActive = true;
+            isDebugActive = false;
 
             boardSizePrefCategory = MelonPreferences.CreateCategory("boardSizePrefCategory");
 
