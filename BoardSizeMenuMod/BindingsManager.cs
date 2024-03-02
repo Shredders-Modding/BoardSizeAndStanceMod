@@ -264,7 +264,7 @@ namespace BoardSizeAndStanceMod
                 replayRightBindingUpdater.SetPosition(newRightPos);
             }
             stanceWidthPref.Value = currentBindingsWidthFactor;
-            //ModLogger.Log($"Width updated with offset = {currentBindingsWidthFactor}");
+            ModLogger.Log($"Width updated with offset = {currentBindingsWidthFactor}");
         }
 
         public void SetNewBindingsWidth(float in_value)
@@ -303,7 +303,7 @@ namespace BoardSizeAndStanceMod
             if (ModManager.instance.areReplayObjectsRegistered)
                 replayLeftBindingUpdater.SetRotation(newAngle);
             leftBindingAnglePref.Value = leftBindingAngleOffset;
-            //ModLogger.Log($"Left binding angle updated with offset = {leftBindingAngleOffset}");
+            ModLogger.Log($"Left binding angle updated with offset = {leftBindingAngleOffset}");
         }
 
         public void SetLeftBindingAngle(float in_value)
@@ -335,7 +335,7 @@ namespace BoardSizeAndStanceMod
             if (ModManager.instance.areReplayObjectsRegistered)
                 replayRightBindingUpdater.SetRotation(newAngle);
             rightBindingAnglePref.Value = rightBindingAngleOffset;
-            //ModLogger.Log($"Right binding angle updated with offset = {rightBindingAngleOffset}");
+            ModLogger.Log($"Right binding angle updated with offset = {rightBindingAngleOffset}");
         }
 
         public void SetRightBindingAngle(float in_value)

@@ -76,7 +76,7 @@ namespace BoardSizeAndStanceMod
             ClassInjector.RegisterTypeInIl2Cpp<BindingsUpdater>();
 
             instance = this;
-            isDebugActive = false;
+            isDebugActive = true;
 
             boardSizePrefCategory = MelonPreferences.CreateCategory("boardSizePrefCategory");
 
@@ -324,7 +324,7 @@ namespace BoardSizeAndStanceMod
 
         public void UpdateBoardSizeValues(float in_length, float in_width)
         {
-            //MelonLogger.Msg($"Updating board size with {in_boardLength} length factor and {in_boardWidth} width factor");
+            ModLogger.Log($"Updating board size with {in_length} length factor and {in_width} width factor");
             
             boardLengthFactor = in_length;
             boardWidthFactor = in_width;

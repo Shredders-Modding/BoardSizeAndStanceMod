@@ -187,12 +187,72 @@ namespace BoardSizeAndStanceMod
         {
             try
             {
-                //ModLogger.Log("TEST LAAAAAAAAA DisableReplays");
                 BindingsManager.instance.ResetBindingsUpdaters();
             }
             catch (System.Exception ex)
             {
                 //MelonLogger.Msg($"Exception in patch of SnowboardSounds.OnLand:\n{ex}");
+            }
+        }
+    }
+
+    //TRYING TO FORCE SETUP ON SOME HOOKS
+    [HarmonyPatch(typeof(SnowboardController), "StartRide")]
+    class StartRidePatcher
+    {
+        [HarmonyPostfix]
+        public static void Postfix(System.Reflection.MethodBase __originalMethod, SnowboardController __instance)
+        {
+            try
+            {
+                ModLogger.Log($"{__originalMethod.Name} method hooked");
+
+                ModManager.instance.InitBoardSizeValues();
+                BindingsManager.instance.InitBindings();
+            }
+            catch (System.Exception ex)
+            {
+                MelonLogger.Msg($"Exception catched in method {__originalMethod.Name} patch:\n{ex}");
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(MenuViewStateSetter), "OnHideView")]
+    class MenuViewStateSetterPatcher
+    {
+        [HarmonyPostfix]
+        public static void Postfix(System.Reflection.MethodBase __originalMethod, SnowboardController __instance)
+        {
+            try
+            {
+                ModLogger.Log($"{__originalMethod.Name} method hooked");
+
+                ModManager.instance.InitBoardSizeValues();
+                BindingsManager.instance.InitBindings();
+            }
+            catch (System.Exception ex)
+            {
+                MelonLogger.Msg($"Exception catched in method {__originalMethod.Name} patch:\n{ex}");
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(ActionRide), "OnStart")]
+    class ActionRidePatcher
+    {
+        [HarmonyPostfix]
+        public static void Postfix(System.Reflection.MethodBase __originalMethod, SnowboardController __instance)
+        {
+            try
+            {
+                ModLogger.Log($"{__originalMethod.Name} method hooked");
+
+                ModManager.instance.InitBoardSizeValues();
+                BindingsManager.instance.InitBindings();
+            }
+            catch (System.Exception ex)
+            {
+                MelonLogger.Msg($"Exception catched in method {__originalMethod.Name} patch:\n{ex}");
             }
         }
     }
